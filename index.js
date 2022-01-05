@@ -5,4 +5,6 @@ app.get("/", (req, res) => {
 	res.send({ hi: "there" });
 });
 
-app.listen(5000);
+// expressがnodeにポート5000番を監視させる
+const PORT = process.env.PORT || 5000;
+app.listen(PORT);
