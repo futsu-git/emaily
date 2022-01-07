@@ -31,6 +31,7 @@ passport.use(
 			clientID: keys.GOOGLE_CLIENT_ID,
 			clientSecret: keys.GOOGLE_CLIENT_SECRET,
 			callbackURL: "/auth/google/callback",
+			proxy: true, // ブラウザがこちらのサーバーにリクエストをするときにHeroku proxyを介しており、デフォルトでは何らかのプロキシを経由するとpassportはそれをむやみに信頼したくないのでhttps->httpに変えてしまう。そこで、proxy:trueとすることでプロキシを信頼するようにでき、httpsのままになる。
 		},
 		// 第2引数に指定した関数は、ユーザーがGoogleのログイン画面からアプリへリダイレクトされたときに実行される
 		(accessToken, refreshToken, profile, done) => {
