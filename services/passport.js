@@ -34,17 +34,14 @@ passport.use(
 			proxy: true, // ブラウザがこちらのサーバーにリクエストをするときにHeroku proxyを介しており、デフォルトでは何らかのプロキシを経由するとpassportはそれをむやみに信頼したくないのでhttps->httpに変えてしまう。そこで、proxy:trueとすることでプロキシを信頼するようにでき、httpsのままになる。
 		},
 		// 第2引数に指定した関数は、ユーザーがGoogleのログイン画面からアプリへリダイレクトされたときに実行される
-		(accessToken, refreshToken, profile, done) => {
+		async (accessToken, refreshToken, profile, done) => {
 			// console.log({ accessToken, refreshToken, profile });
-			User.findOne({ googleId: profile.id }).then((existingUser) => {
-				if (existingUser) {
-					done(null, existingUser);
-				} else {
-					new User({ googleId: profile.id }).save().then((user) => {
-						done(null, user);
-					});
-				}
-			});
+			const existingUser = await User.findOne({ googleId: profile.id });
+			if (existingUser) {
+				return done(null, existingUser);
+			}
+			const user = await new User({ googleId: profile.id }).save();
+			done(null, user);
 		}
 	)
 );
