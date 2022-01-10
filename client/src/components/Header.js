@@ -1,9 +1,8 @@
-import { useEffect } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 
 const Header = ({ auth }) => {
-	console.log(auth);
+	// console.log(auth);
 
 	const renderMenu = () => {
 		switch (auth) {
@@ -20,9 +19,11 @@ const Header = ({ auth }) => {
 				);
 			default:
 				return [
-					<li key="0">Payments</li>,
+					<li key="0">
+						<Link to="/payments">Add Credits</Link>
+					</li>,
 					<li key="1" style={{ margin: "0 10px" }}>
-						Credits:--
+						Credits:{auth.credits}
 					</li>,
 					<li key="2">
 						<a href="/api/logout">Logout</a>

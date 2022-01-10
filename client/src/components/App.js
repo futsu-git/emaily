@@ -7,6 +7,7 @@ import Header from "./Header";
 import Landing from "./Landing";
 import Dashboard from "./Dashboard";
 import SurveyNew from "./SurveyNew";
+import Payments from "./Payments";
 
 const App = (props) => {
 	useEffect(() => {
@@ -20,6 +21,7 @@ const App = (props) => {
 				<div className="container">
 					<Routes>
 						<Route path="/" element={<Landing />} />
+						<Route path="/payments" element={<Payments />} />
 						<Route path="/surveys" element={<Dashboard />} />
 						<Route path="/surveys/new" element={<SurveyNew />} />
 					</Routes>

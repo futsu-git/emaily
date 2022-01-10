@@ -11,7 +11,7 @@ require("./models/User");
 require("./services/passport");
 
 const app = express();
-
+app.use(express.json());
 app.use(
 	cookieSession({
 		maxAge: 30 * 24 * 60 * 60 * 1000, // 30日*24時間*60分*60秒*1000ミリ秒 -> cookieは30日間存続
@@ -25,6 +25,17 @@ app.use(passport.session());
 
 // 各routeの読み込み
 require("./routes/authRoutes")(app);
+require("./routes/billingRoutes")(app);
+
+// Herokuは自動的にprocess.env.NODE_ENVを"production"に設定する
+if (process.env.NODE_ENV === "production") {
+	app.use(express.static("client/build"));
+
+	const path = require("path");
+	app.get("*", (req, res) => {
+		res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
+	});
+}
 
 // expressがnodeにポート5000番を監視させる
 const PORT = process.env.PORT || 5000;
