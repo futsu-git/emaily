@@ -2,16 +2,11 @@ import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 
 const Header = ({ auth }) => {
-	// console.log(auth);
-
 	const renderMenu = () => {
 		switch (auth) {
 			case null:
 				return;
 			case false:
-				// Linkタグとaタグの使い分け
-				// Linkタグ：React Routerによってレンダリングされるコンポーネントに遷移するとき
-				// aタグ：全く異なるHTML文書に遷移するとき
 				return (
 					<li>
 						<a href="/auth/google">Login with Google</a>

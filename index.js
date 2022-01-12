@@ -7,6 +7,7 @@ const keys = require("./config/keys");
 mongoose.connect(keys.MONGO_URI);
 
 require("./models/User");
+require("./models/Survey");
 
 require("./services/passport");
 
@@ -26,6 +27,7 @@ app.use(passport.session());
 // 各routeの読み込み
 require("./routes/authRoutes")(app);
 require("./routes/billingRoutes")(app);
+require("./routes/surveyRoutes")(app);
 
 // Herokuは自動的にprocess.env.NODE_ENVを"production"に設定する
 if (process.env.NODE_ENV === "production") {

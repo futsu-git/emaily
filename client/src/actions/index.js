@@ -1,5 +1,5 @@
 import axios from "axios";
-import { FETCH_USER } from "./types";
+import { FETCH_USER, FETCH_SURVEYS } from "./types";
 
 export const fetchUser = () => {
 	return async (dispatch) => {
@@ -8,8 +8,19 @@ export const fetchUser = () => {
 	};
 };
 
-export const handleToken = (token) => {
+export const submitSurvey = (values, navigate) => {
 	return async (dispatch) => {
-		const res = await axios.post("/api/stripe");
+		const res = await axios.post("/api/surveys", values);
+
+		navigate("/surveys");
+		dispatch({ type: FETCH_USER, payload: res.data });
+	};
+};
+
+export const fetchSurveys = () => {
+	return async (dispatch) => {
+		const res = await axios.get("/api/surveys");
+
+		dispatch({ type: FETCH_SURVEYS, payload: res.data });
 	};
 };

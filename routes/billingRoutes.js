@@ -13,8 +13,6 @@ const calculateOrderAmount = (items) => {
 	return 500;
 };
 
-const endpointSecret = "whsec_sVmDZITUP4yqRMncoBreG9M1Ac54CDN5";
-
 module.exports = (app) => {
 	app.post(
 		"/api/stripe/create-payment-intent",
@@ -41,7 +39,7 @@ module.exports = (app) => {
 	);
 
 	app.post(
-		"/api/stripe/webhook",
+		"/api/stripe/webhooks",
 		express.raw({ type: "application/json" }),
 		async (req, res) => {
 			let event = req.body;

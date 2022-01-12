@@ -37,13 +37,9 @@ const Payments = (props) => {
 			style={{ width: "100%", display: "flex", justifyContent: "center" }}
 		>
 			{clientSecret && (
-				// <div className="modal">
-				// <div className="modal-content">
 				<Elements options={options} stripe={stripePromise}>
 					<CheckoutForm />
 				</Elements>
-				// </div>
-				// </div>
 			)}
 		</div>
 	);

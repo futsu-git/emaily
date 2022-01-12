@@ -28,7 +28,6 @@ export default function CheckoutForm() {
 		stripe.retrievePaymentIntent(clientSecret).then(({ paymentIntent }) => {
 			switch (paymentIntent.status) {
 				case "succeeded":
-					// たぶんここでuserモデルのcreditsに加算するapiをたたけばよさそう
 					setMessage("Payment succeeded!");
 					break;
 				case "processing":
@@ -62,9 +61,6 @@ export default function CheckoutForm() {
 				return_url: `${process.env.REACT_APP_ROOT_URL}/payments`,
 			},
 		});
-
-		console.log({ error });
-		if (!error) console.log("dekita");
 
 		// This point will only be reached if there is an immediate error when
 		// confirming the payment. Otherwise, your customer will be redirected to
