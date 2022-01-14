@@ -1,6 +1,11 @@
 import { useEffect } from "react";
 import { connect } from "react-redux";
+import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
+import { Pie } from "react-chartjs-2";
+
 import { fetchSurveys } from "../../actions";
+
+ChartJS.register(ArcElement, Tooltip, Legend);
 
 const SurveyList = (props) => {
 	useEffect(() => {
@@ -10,18 +15,45 @@ const SurveyList = (props) => {
 	const lists = () => {
 		if (!props.surveys) return <></>;
 		return props.surveys.reverse().map((survey) => {
+			const data = {
+				labels: ["yes", "no"],
+				datasets: [
+					{
+						data: [survey.yes, survey.no],
+						backgroundColor: [
+							"rgba(255, 99, 132, 0.5)",
+							"rgba(54, 162, 235, 0.5)",
+						],
+						borderWidth: 1,
+					},
+				],
+			};
+
 			return (
 				<div className="card" key={survey._id}>
 					<div className="card-content">
 						<span className="card-title">{survey.title}</span>
 						<p>{survey.body}</p>
-						<p className="right">
-							Sent on: {new Date(survey.dateSent).toLocaleDateString()}
+						<div
+							style={{
+								maxWidth: "150px",
+								marginLeft: "auto",
+								marginRight: "auto",
+							}}
+						>
+							{survey.yes + survey.no > 0 ? <Pie data={data} /> : <></>}
+						</div>
+						<p style={{ textAlign: "right" }}>
+							{survey.lastResponded
+								? `last responded: ${new Date(
+										survey.lastResponded
+								  ).toLocaleDateString()}`
+								: ""}
 						</p>
 					</div>
 					<div className="card-action">
-						<a>yes:{survey.yes}</a>
-						<a>no:{survey.no}</a>
+						<a>YES:{survey.yes}</a>
+						<a>NO:{survey.no}</a>
 					</div>
 				</div>
 			);

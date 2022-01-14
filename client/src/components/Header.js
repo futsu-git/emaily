@@ -30,10 +30,10 @@ const Header = ({ auth }) => {
 	return (
 		<nav style={{ paddingLeft: "10px" }}>
 			<div className="nav-wrapper">
-				<Link to={auth ? "/surveys" : "/"} className="brand-logo">
+				<Link to={auth ? "/surveys" : "/"} className="left brand-logo">
 					Emaily
 				</Link>
-				<ul id="nav-mobile" className="right hide-on-med-and-down">
+				<ul id="nav-mobile" className="right">
 					{renderMenu()}
 				</ul>
 			</div>
